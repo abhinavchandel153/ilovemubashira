@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mobile Photo Feed</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #0d0d0d;
+      display: flex;
+      justify-content: center;
+    }
+
+    .mobile-wrapper {
+      width: 100%;
+      max-width: 450px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .mobile-wrapper img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="mobile-wrapper" id="gallery"></div>
+
+  <script>
+    const totalPhotos = 12; // Change this number if you have more or fewer photos
+    const extensions = ['jpg', 'jpeg', 'png', 'webp', 'JPG', 'PNG'];
+    const gallery = document.getElementById('gallery');
+
+    for (let i = 1; i <= totalPhotos; i++) {
+      const img = document.createElement('img');
+      let extIndex = 0;
+
+      img.src = `${i}.${extensions[extIndex]}`;
+      img.alt = `Photo ${i}`;
+
+      // Automatically checks alternative formats if needed, or skips if the number doesn't exist yet
+      img.onerror = function () {
+        extIndex++;
+        if (extIndex < extensions.length) {
+          this.src = `${i}.${extensions[extIndex]}`;
+        } else {
+          this.remove(); 
+        }
+      };
+
+      gallery.appendChild(img);
+    }
+  </script>
+
+</body>
+</html>
